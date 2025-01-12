@@ -30,3 +30,43 @@ module "ServicePrincipal" {
   ]
 
 }
+
+# ______________ Role Creation + Assignment ______________
+
+data "azurerm_subscription" "primary" {
+}
+# data "azurerm_client_config" "current" {
+# }
+
+# create a role
+# Custom role definition
+# resource "azurerm_role_definition" "sp_Contributor" {
+#     name               = "Contributor"
+#     scope = data.azurerm_subscription.primary.id
+#     permissions {
+#         actions     = ["Microsoft.Resources/subscriptions/resourceGroups/write",
+#                        "Microsoft.Resources/subscriptions/resourceGroups/read",
+#                        "Microsoft.Resources/subscriptions/resourceGroups/delete"]
+#         not_actions = []
+#     }
+ 
+#     assignable_scopes = [ 
+#         data.azurerm_subscription.primary.id
+#     ]
+
+# }
+
+# Assign the role to the service principal
+
+resource "azurerm_role_assignment" "rolespn" {
+    role_definition_name = "Contributor"
+    scope = data.azurerm_subscription.primary.id
+    # # Custom role Assignment
+    # role_definition_id = azurerm_role_definition.sp_Contributor.role_definition_resource_id
+    principal_id = module.ServicePrincipal.service_principal_object_id
+
+    depends_on = [ 
+        # azuread_service_principal.main
+        module.ServicePrincipal
+    ]
+}

@@ -1,3 +1,5 @@
+# ______________ Service Principal ______________
+
 data "azuread_client_config" "current" {}
 
 resource "azuread_application" "main" {
@@ -14,3 +16,4 @@ resource "azuread_service_principal" "main" {
 resource "azuread_service_principal_password" "main" {
   service_principal_id = azuread_service_principal.main.id
 }
+
