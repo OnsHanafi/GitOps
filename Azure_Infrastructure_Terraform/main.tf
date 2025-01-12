@@ -16,3 +16,12 @@ resource "azurerm_resource_group" "rg1" {
   name = var.rgname
   location = var.location
 }
+
+# add service principal module to the root module
+module "ServicePrincipal" {
+  source = "./modules/servicePrincipal"
+  # pass the service principal name to the module 
+  # (must be added to the variables.tf file in the root module)
+  service_principal_name = var.service_principal_name
+  
+}
