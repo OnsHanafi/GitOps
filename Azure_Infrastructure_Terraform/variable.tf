@@ -14,3 +14,9 @@ variable "service_principal_name" {
   type        = string
 
 }
+
+variable "keyvault_name" {
+  description = "The name of the key vault"
+  type        = string
+  
+}

@@ -23,7 +23,6 @@ module "ServicePrincipal" {
   # pass the service principal name to the module 
   # (must be added to the variables.tf file in the root module)
   service_principal_name = var.service_principal_name
-
   # Created only after the resource group is povisioned
   depends_on = [
     azurerm_resource_group.rg1
@@ -31,7 +30,7 @@ module "ServicePrincipal" {
 
 }
 
-# ______________ Role Creation + Assignment ______________
+# ______________ Role Assignment ______________
 
 data "azurerm_subscription" "primary" {
 }
@@ -72,4 +71,13 @@ resource "azurerm_role_assignment" "rolespn" {
         # azuread_service_principal.main
         module.ServicePrincipal
     ]
+}
+
+# ______________ Key Vault ______________
+module "keyvault" {
+  source = "./modules/keyVault"
+  keyvault_name = var.keyvault_name
+  location = var.location
+  resource_group_name = var.rgname
+
 }
