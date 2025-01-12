@@ -23,5 +23,10 @@ module "ServicePrincipal" {
   # pass the service principal name to the module 
   # (must be added to the variables.tf file in the root module)
   service_principal_name = var.service_principal_name
+
+  # Created only after the resource group is povisioned
+  depends_on = [ 
+    azurerm_resource_group.rg1
+   ]
   
 }
