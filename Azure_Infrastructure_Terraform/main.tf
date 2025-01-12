@@ -63,6 +63,9 @@ resource "azurerm_role_assignment" "rolespn" {
     scope = data.azurerm_subscription.primary.id
     # # Custom role Assignment
     # role_definition_id = azurerm_role_definition.sp_Contributor.role_definition_resource_id
+    
+    # Assign the role to the service principal
+    # gets the output of the service principal object id
     principal_id = module.ServicePrincipal.service_principal_object_id
 
     depends_on = [ 
