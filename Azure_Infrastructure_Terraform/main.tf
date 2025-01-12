@@ -74,10 +74,23 @@ resource "azurerm_role_assignment" "rolespn" {
 }
 
 # ______________ Key Vault ______________
+
 module "keyvault" {
   source = "./modules/keyVault"
   keyvault_name = var.keyvault_name
   location = var.location
   resource_group_name = var.rgname
+  service_principal_name = var.service_principal_name
+  service_principal_object_id = module.ServicePrincipal.service_principal_object_id
+  service_principal_tenant_id = module.ServicePrincipal.service_principal_tenant_id
 
+  depends_on = [ module.ServicePrincipal ]
+
+}
+
+resource "azurerm_key_vault_secret" "kv_secret" {
+  name = module.ServicePrincipal.client_id
+  value = module.ServicePrincipal.client_secret
+  key_vault_id = module.keyvault.keyvault_id
+  
 }

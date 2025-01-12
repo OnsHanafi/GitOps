@@ -20,7 +20,7 @@ output "service_principal_application_id" {
 
 output "client_id" {
   description   = "client_id of the service principal, used for authenticating with AzureAD app"
-  value         = azuread_application.main.id 
+  value         = azuread_application.main.client_id 
 }
 
 output "client_secret" {
