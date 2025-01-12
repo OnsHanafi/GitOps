@@ -1,7 +1,14 @@
-# Terraform primary configuration mandatory file
+# __________ Authenticated to Azure via CLI __________
+# 1- Az login
+# 2- Az account set --subscription="SUBSCRIPTION_ID"
+# 3- set subscription_id via environment variable
+# POWERSHELL: Set-Item -Path Env:ARM_SUBSCRIPTION_ID -Value "your_subscription_id"
+# BASH: export ARM_SUBSCRIPTION_ID="your_subscription_id"
+
+# __________ Terraform Configuration __________
+# Provider Configuration
 provider "azurerm" {
   features {}
-  
 }
 
 # resource group creation
