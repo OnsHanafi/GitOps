@@ -98,3 +98,15 @@ resource "azurerm_key_vault_secret" "kv_secret" {
   depends_on = [ module.keyvault ]
   
 }
+
+# ______________ AKS ______________
+module "aks" {
+  source = "./modules/aks"
+# create the AKS cluster with the service principal   
+  service_principal_name = var.service_principal_name
+  location = var.location
+  resource_group_name = var.rgname
+# to authenticate the AKS cluster with the service principal 
+  client_id = module.ServicePrincipal.client_id
+  client_secret = module.ServicePrincipal.client_secret
+}
