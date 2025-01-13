@@ -10,7 +10,7 @@ resource "azurerm_key_vault" "keyvault" {
   tenant_id           = data.azurerm_client_config.current.tenant_id
   sku_name            = "standard"
   soft_delete_retention_days = 7
-  enable_rbac_authorization = true
+  enable_rbac_authorization = false
 }
 
 resource "azurerm_key_vault_access_policy" "kv_policy" {
@@ -18,13 +18,20 @@ resource "azurerm_key_vault_access_policy" "kv_policy" {
   tenant_id    = data.azurerm_client_config.current.tenant_id
   object_id    = data.azurerm_client_config.current.object_id
 
-  # No need when enable_rbac_authorization is true
-  # key_permissions = [
-  #   "Get",
-  # ]
+  key_permissions = [
+    "Get",
+    "List",
+    "Update",
+    "Create",
+    "Import",
+    "Delete" 
+  ]
 
-  # secret_permissions = [
-  #   "Get",
-  # ]
+  secret_permissions = [
+    "Get",
+    "List",
+    "Set",
+    "Delete"
+  ]
 }
 
